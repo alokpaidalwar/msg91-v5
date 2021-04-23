@@ -1,0 +1,38 @@
+{
+  "name": "msg91-v5",
+  "version": "1.0.0",
+  "description": "WIP - work in progess - Its msg91 node js package having latest api's of msg91 for sending sms,flow api,sendOtp etc",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "keywords": [
+    "msg91",
+    "nodejs",
+    "send",
+    "sms",
+    "api",
+    "send",
+    "otp",
+    "v5",
+    "msg91 flow",
+    "msg91 sms",
+    "dlt",
+    "template",
+    "dlt template"
+  ],
+  "author": "Alok",
+  "license": "MIT",
+  "devDependencies": {
+    "express": "^4.17.1",
+    "mocha": "^8.3.2",
+    "nock": "*",
+    "husky": "^6.0.0",
+    "eslint": "^7.24.0",
+    "eslint-config-formidable": "^4.0.0",
+    "eslint-config-prettier": "^8.2.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.2.1",
+    "prettier-eslint": "^12.0.0"
+  }
+}
