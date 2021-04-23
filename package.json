@@ -1,7 +1,7 @@
 {
   "name": "msg91-v5",
   "version": "1.0.0",
-  "description": "WIP - work in progess - Its msg91 node js package having latest api's of msg91 for sending sms,flow api,sendOtp etc",
+  "description": "WIP - work in progess - Its msg91 node js package having latest api's of msg91 i.e v5 for sending sms,flow api,sendOtp etc",
   "main": "index.js",
   "scripts": {
     "test": "mocha --reporter spec"
