@@ -3,12 +3,12 @@ const http = require('https')
 /**
  * calling corresponding
  *
- * @param {Object} aOptions is request option to call msg91 server
+ * @param {Object} options is request option to call msg91 server
  * @return {Promise<Object>}
  */
-exports.performRequest = async (aOptions,resolveP,rejectP) => {
+exports.performRequest = async (options,resolveP,rejectP) => {
   return new Promise((resolve, reject) => {
-    const req = http.request(aOptions, (res) => {
+    const req = http.request(options, (res) => {
       const chunks = []
 
       res.on('data', (chunk) => {
@@ -25,8 +25,8 @@ exports.performRequest = async (aOptions,resolveP,rejectP) => {
       })
     })
 
-    if (aOptions.body) {
-      req.write(JSON.stringify(aOptions.body))
+    if (options.body) {
+      req.write(JSON.stringify(options.body))
     }
 
     req.end()

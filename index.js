@@ -45,7 +45,7 @@ class SendSms {
   static generateOTP(lenght) {
     if (Length < 4) {
       console.log(
-        'OTP length must be greater than 4 to avoid security breaches'
+        'OTP length must be greater than 4 to avoid security breaches.'
       )
     }
 
