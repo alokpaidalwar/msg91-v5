@@ -1,26 +1,12 @@
 {
   "name": "msg91-v5",
-  "version": "1.0.0",
-  "description": "WIP - work in progess - Its msg91 node js package having latest api's of msg91 i.e v5 for sending sms,flow api,sendOtp etc",
+  "version": "1.0.1",
+  "description": "WIP - WORK IN PROGESS - Only send Otp working - Its msg91 node js package having latest api's of msg91 i.e v5 for sending sms,flow api,sendOtp,whatsapp etc",
   "main": "index.js",
   "scripts": {
     "test": "mocha --reporter spec"
   },
-  "keywords": [
-    "msg91",
-    "nodejs",
-    "send",
-    "sms",
-    "api",
-    "send",
-    "otp",
-    "v5",
-    "msg91 flow",
-    "msg91 sms",
-    "dlt",
-    "template",
-    "dlt template"
-  ],
+  "keywords": [],
   "author": "Alok",
   "license": "MIT",
   "devDependencies": {
