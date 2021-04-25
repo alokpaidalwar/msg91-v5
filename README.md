@@ -11,11 +11,14 @@ npm i msg91-v5
 
 # Msg91 Integration
 
+### Initialization 
+```javascript
+const msg91 = new (require('msg91-v5'))("Auth Key");
+```
 
 ### Send OTP
 
 ```javascript
-const msg91 = new (require('msg91-v5'))("Auth Key");
 
 // List of variable with the same name defind in msg sendOtp API
 const params = {
