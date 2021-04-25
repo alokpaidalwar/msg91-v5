@@ -1,12 +1,18 @@
 {
   "name": "msg91-v5",
   "version": "1.0.2",
-  "description": "Its msg91 package with latest api's of msg91 i.e v5 for sending otp via sendOtp,sms via flow api,whatsapp etc",
+  "description": "Its msg91 package with latest api's of msg91 including DLT ID i.e v5  for sending otp via sendOtp,sms via flow api,whatsapp and many more.",
   "main": "index.js",
   "scripts": {
     "test": "mocha --reporter spec"
   },
-  "keywords": [],
+  "homepage": "https://github.com/alokpaidalwar/msg91-v5#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alokpaidalwar/msg91-v5.git"
+  },
+  "keywords": ["msg91","msg91 api","msg91 sms","sms","msg91 otp","otp","dlt template","dlt","template","flow","v5",
+                "msg91 flow","msg91 latest","sendOtp","sms api","promise"],
   "author": "Alok",
   "license": "MIT",
   "devDependencies": {

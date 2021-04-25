@@ -1,5 +1,7 @@
-# Msg91
-Msg91 API v5 - Its msg91 package with latest api's of msg91 i.e v5 for sending otp via sendOtp,sms via flow api,whatsapp etc
+# Msg91 [![NPM version](https://img.shields.io/npm/v/msg91-v5.svg?style=flat)](https://www.npmjs.com/package/msg91-v5) [![NPM monthly downloads](https://img.shields.io/npm/dm/msg91-v5.svg?style=flat)](https://npmjs.org/package/msg91-v5) [![NPM total downloads](https://img.shields.io/npm/dt/msg91-v5.svg?style=flat)](https://npmjs.org/package/msg91-v5)
+Its msg91 package with latest api's of msg91 including DLT ID i.e v5  for sending otp via sendOtp,sms via flow api,whatsapp and many more.
+> Note: It also supports latest dlt id as parameter in api i.e DLT_TE_ID
+
 > Note: Send Sms via flow and whatsapp api is work in progess (WIP)
 
 
