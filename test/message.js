@@ -1,6 +1,6 @@
 const nock = require('nock')
 const assert = require('assert')
-const { performRequest } = require('../libs/request')
+const { httpRequest } = require('../libs/request')
 const SendSms = require('./../index')
 
 describe('SendSmsService', () => {
@@ -16,7 +16,7 @@ describe('SendSmsService', () => {
     })
   })
 
-  describe('performRequest', () => {
+  describe('httpRequest', () => {
     before(() => {
       this.nock = nock('https://api.msg91.com')
     })
@@ -34,7 +34,7 @@ describe('SendSmsService', () => {
         }
       }
 
-      performRequest(options)
+      httpRequest(options)
         .then((response) => {
           assert.notDeepStrictEqual(response, null)
           done()
@@ -58,7 +58,7 @@ describe('SendSmsService', () => {
         }
       }
 
-      performRequest(options)
+      httpRequest(options)
         .then((response) => {
           assert.notDeepStrictEqual(response, null)
           done()

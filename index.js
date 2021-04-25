@@ -1,9 +1,9 @@
-const { performRequest, handleResponse } = require('./libs/request')
+const { httpRequest } = require('./libs/request')
 
 class SendSms {
     /**
-     * Creates a new SendOtp instance to handle OTP message handling of the MSG91 services
-     * @param {String} aAuthKey Authentication key
+     * Creates a new SendSms instance
+     * @param {String} authKey Authentication key
      */
     constructor(authKey) {
         this.authKey = authKey;
@@ -12,134 +12,60 @@ class SendSms {
     /**
      * Changing the default OTP expiry time value
      *
-     * @param {Number} ExpiryTime which will set the time in minutes
+     * @param {Number} expiryTime time in minutes
      */
     setOTPExpiry(expiryTime) {
         this.otpExpiry = expiryTime;
     }
 
     /**
-     * Setting otp template value to replace the given text
+     * Setting otp template id
      *
-     * @param {String} OTPTemplateId which will set the time in minutes
+     * @param {String} OTPTemplateId
      */
     setOTPTemplateId(OTPTemplateId) {
         this.otpTemplateId = OTPTemplateId;
     }
 
-    /**
-     * Setting otp generation max digits value
+     /**
+     * Setting DLT id
      *
-     * @param {Number} OTPLength which will set the time in minutes
+     * @param {String} dltId
+     */
+      setDltId(dltId) {
+        this.dltId = dltId;
+    }
+
+
+    /**
+     * Setting otp length
+     *
+     * @param {Number} OTPLength
      */
     setOTPLength(OTPLength) {
         this.otpLength = OTPLength;
     }
 
     /**
-     * Generate OTP for the max digits and giving the random values
+     * Generate OTP of the given length and return the random valued OTP
      *
-     * @param {number} lenght max digits of the OTP
+     * @param {number} length max digits of the OTP
      * @return {string} random generated otp value
      */
     generateOTP(length) {
-        if (length < 4) {
-         console.log(
-            'OTP length must be greater than 4 to avoid security breaches.'
-         )
-        }
-
         const lowDigits = Math.pow(10, length - 1)
         const highDigits = 9 * Math.pow(10, length - 1)
         return Math.floor(lowDigits + Math.random() * highDigits).toString()
     }
 
     /**
-     * @param {SendOtpService} sendOtpS
-     * @param {Object} aOptions will contain the params to verify
+     * Construct the otp url path according to option- verify,send,resend
+     * @param {string} path is  url path section
+     * @param {Object} params is the params to send with the url
      * @return {string} path of the send otp
      **/
-    constructRetryOTPRequest(aOptions) {
-        let sendOTPath = `/api/v5/otp/retry?authkey=${encodeURIComponent(
-        sendOtpS.authKey
-        )}`
-
-        if (aOptions.mobile && aOptions.mobile.length > 0) {
-        if (aOptions.mobile.length > 10) {
-            sendOTPath += `&mobile=${aOptions.mobile}`
-        } else {
-            throw new Error('mobile number is not having the country dial code')
-        }
-        } else {
-        throw new Error('mobile number should not be null')
-        }
-
-        if (
-        aOptions.retryType &&
-        aOptions.retryType.length > 0 &&
-        ['voice', 'text'].includes(aOptions.retryType)
-        ) {
-        sendOTPath += `&retrytype=${aOptions.retryType}`
-        } else {
-        sendOTPath += '&retrytype=text'
-        }
-
-        return sendOTPath
-    }
-
-    /**
-     * @param {SendOtpService} sendOtpS
-     * @param {Object} aOptions will contain the params to verify
-     * @return {string} path of the send otp
-     **/
-    constructVerifyOTPRequest(sendOtpS, aOptions) {
-        let sendOTPath = `/api/v5/otp/verify?authkey=${encodeURIComponent(
-        sendOtpS.authKey
-        )}`
-
-        if (aOptions.otp && aOptions.otp > 0) {
-        sendOTPath += `&otp=${aOptions.otp}`
-        } else {
-        throw new Error('otp should not be null')
-        }
-
-        if (aOptions.mobile && aOptions.mobile.length > 0) {
-        if (aOptions.mobile.length > 10) {
-            sendOTPath += `&mobile=${aOptions.mobile}`
-        } else {
-            throw new Error('mobile number is not having the country dial code')
-        }
-        } else {
-        throw new Error('mobile number should not be null')
-        }
-
-        return sendOTPath
-    }
-
-
-    constructImportantOTPParams(aOptions, sendOTPath, sendOtpS) {
-        if (aOptions.mobile && aOptions.mobile.length > 0) {
-        sendOTPath += `&mobile=${aOptions.mobile}`
-        }
-
-        if (
-        sendOtpS.otpTemplateId &&
-        sendOtpS.otpTemplateId.length > 0
-        ) {
-        sendOTPath += `&template_id=${encodeURIComponent(
-            sendOtpS.otpTemplateId
-        )}`
-        }
-        return sendOTPath
-    }
-
-    /**
-     * @param {SendOtpService} sendOtpS
-     * @param {Object} aOptions will contain the params to send
-     * @return {string} path of the send otp
-     **/
-     constructSendOTPRequest(path, params) {
-        let sendOTPath = `/api/v5/${path}?authkey=${encodeURIComponent(this.authKey)}`;
+    constructOTPRequest(path, params) {
+        let sendOTPath = `/api/v5/${path}?authkey=${encodeURIComponent((params.authKey && params.authKey != null ? params.authKey:this.authKey))}`;
       
         Object.keys(params).forEach(key => {
             sendOTPath += `&${key}=${encodeURIComponent(params[key])}`;
@@ -148,9 +74,10 @@ class SendSms {
     }
 
     /**
-     * Sending OTP message to the users
+     * Sending OTP to given mobile number
      *
-     * @param aOptions will contain the information about the phone number, template id, otp
+     * @param {Object} params is the parameters Mandatory & Optional both
+     * @param {Object} args is  the args of the message i.e variables 
      * @return {Promise<Object>}
      */
     async sendOTP(params,args) {
@@ -165,11 +92,10 @@ class SendSms {
                 }
             }
 
-            options.path = this.constructSendOTPRequest('otp', params)
+            options.path = await this.constructOTPRequest('otp', params)
             options.body = args;
          
-            await performRequest(options,resolve,reject)
-            //handleResponse(response, resolve, reject)
+            await httpRequest(options,resolve,reject)
         } catch (error) {
             reject(error)
         }
@@ -177,24 +103,23 @@ class SendSms {
     }
 
     /**
-     * Verifying OTP message to the users
+     * Verifying OTP
      *
-     * @param aOptions will contain the information about the phone number, template id, otp
+     * @param {Object} params is parameters in url - Mandatory & Optional both
      * @return {Promise<Object>}
      */
-    async verifyOTP(aOptions) {
+    async verifyOTP(params) {
         return new Promise(async (resolve, reject) => {
         try {
             const options = {
-            method: 'POST',
-            hostname: 'api.msg91.com',
-            port: null,
-            headers: {}
+                method: 'GET',
+                hostname: 'api.msg91.com',
+                port: null,
+                headers: {}
             }
 
-            options.path = this.constructVerifyOTPRequest(this, aOptions)
-            const response = await performRequest(options)
-           // handleResponse(response, resolve, reject)
+            options.path = await this.constructOTPRequest('otp/verify', params);
+            await httpRequest(options,resolve,reject)
         } catch (error) {
             reject(error)
         }
@@ -202,24 +127,23 @@ class SendSms {
     }
 
     /**
-     * Retrying OTP message to the user
+     * Retrying OTP
      *
-     * @param aOptions will contain the information about the phone number, template id, otp
+     * @param params is the parameters in url - Mandatory & Optional both
      * @return {Promise<Object>}
      */
-    async retryOTP(aOptions) {
+    async retryOTP(params) {
         return new Promise(async (resolve, reject) => {
         try {
             const options = {
-            method: 'POST',
+            method: 'GET',
             hostname: 'api.msg91.com',
             port: null,
             headers: {}
             }
 
-            options.path = this.constructRetryOTPRequest(this, aOptions)
-            const response = await performRequest(options)
-           // handleResponse(response, resolve, reject)
+            options.path = this.constructOTPRequest('otp/retry', params)
+            await httpRequest(options,resolve,reject)
         } catch (error) {
             reject(error)
         }

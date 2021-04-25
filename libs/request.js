@@ -1,12 +1,14 @@
 const http = require('https')
 
 /**
- * calling corresponding
+ * Http request
  *
- * @param {Object} options is request option to call msg91 server
+ * @param {Object} options is request options to call msg91 api
+ * @param {Promise<PromiseResolveEvent>} resolveP parent promoise - resolve call
+ * @param {Promise<PromiseRejectionEvent>} rejectP parent promoise - reject call
  * @return {Promise<Object>}
  */
-exports.performRequest = async (options,resolveP,rejectP) => {
+exports.httpRequest = async (options,resolveP,rejectP) => {
   return new Promise((resolve, reject) => {
     const req = http.request(options, (res) => {
       const chunks = []
@@ -31,6 +33,12 @@ exports.performRequest = async (options,resolveP,rejectP) => {
 
     req.end()
   }).then((response)=>{
+    if (response.type === 'error') {
+      if (!response.code) {
+        response.code = 201
+      }
+      rejectP(response)
+    }
     resolveP(response)
   }, (response) =>{
       if (!response.code) {
@@ -39,15 +47,4 @@ exports.performRequest = async (options,resolveP,rejectP) => {
       rejectP(response)
     }
   )
-}
-
-exports.handleResponse = (response, resolve, rejects) => {
-  if (response.type === 'error') {
-    if (!response.code) {
-      response.code = 201
-    }
-    rejects(response)
-  }
-
-  resolve(response)
 }

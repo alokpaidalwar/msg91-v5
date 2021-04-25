@@ -1,7 +1,7 @@
 {
   "name": "msg91-v5",
   "version": "1.0.2",
-  "description": "WIP - WORK IN PROGESS - Only send Otp working - Its msg91 node js package having latest api's of msg91 i.e v5 for sending sms,flow api,sendOtp,whatsapp etc",
+  "description": "Its msg91 package with latest api's of msg91 i.e v5 for sending otp via sendOtp,sms via flow api,whatsapp etc",
   "main": "index.js",
   "scripts": {
     "test": "mocha --reporter spec"
