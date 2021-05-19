@@ -17,6 +17,35 @@ npm i msg91-v5
 ```javascript
 const msg91 = new (require('msg91-v5'))("Auth Key");
 ```
+## Send SMS via api v2 of msg91
+
+Sending sms to many messages to many mobiles using msg91 v2 api
+
+```javascript
+const msg91 = new (require('msg91-v5'))('Auth Key','Sender id','route id');
+
+const mobileNumbers = ["9194XXXX87XX", "88XXXX67XX", "77XXXX44XX"];
+//OR
+const mobileNumbers = "9194XXXX87XX,88XXXX67XX,77XXXX44XX";
+//OR
+const mobileNumbers = "88XXXX67XX";
+
+const messages = ["Your order is placed.Thank You.", "Your order will be shipped tomorrow."]; 
+//OR
+const messages = "Your order is placed.Thank You.";
+
+const options = {
+    mobiles: mobileNumbers,// Mandatory param along with country dial code
+    DLT_TE_ID: '1307161494244105766', //Mandatory if applicable
+    message : messages //Mandatory
+}
+msg91.sendSMS(options).then(() => {
+//Handle success result
+}).catch(() => {
+//Handle failure result
+})
+
+```
 
 ### Send OTP
 
@@ -84,4 +113,15 @@ msg91.retryOTP(params).then(() => {
     //Handle failure
 })
 
+```
+
+ 
+### Checking balance according route type
+
+```javascript
+msg91.getBalance("ROUTE_ID").then(() => {
+//Handle success result
+}).catch(() => {
+//Handle failure result
+})
 ```
