@@ -36,7 +36,7 @@ const messages = "Your order is placed.Thank You.";
 
 const options = {
     mobiles: mobileNumbers,// Mandatory param along with country dial code
-    DLT_TE_ID: '1307161494244105766', //Mandatory if applicable
+    DLT_TE_ID: '540XXXXXXX1057XX', //Mandatory if applicable
     message : messages //Mandatory
 }
 msg91.sendSMS(options).then(() => {

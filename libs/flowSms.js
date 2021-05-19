@@ -22,23 +22,23 @@ module.exports = {
 
     
     /**
-     * @param {Object} aMobileNumbers will list of mobile numbers
-     * @param {Object} aMessages to send it to the users
+     * @param {Object} mobileNumbers will list of mobile numbers
+     * @param {Object} messagesArg to send it to the users
      * @return {Array} list of message object
      */
-    extractMessagesObject(aMobileNumbers, aMessages) {
+    extractMessagesObject(mobileNumbers, messagesArg) {
         const messages = []
 
-        if (aMessages && aMessages.length > 0) {
-            if (aMessages instanceof Array) {
-                aMessages.forEach((message) => {
+        if (messagesArg && messagesArg.length > 0) {
+            if (messagesArg instanceof Array) {
+                messagesArg.forEach((message) => {
                     message = message.trimEnd()
                     if (message.length > 0) {
-                        messages.push(this.extractedMessage(message, aMobileNumbers))
+                        messages.push(this.createSmsObject(mobileNumbers,message))
                     }
                 })
             }else{
-                messages.push(this.extractedMessage(aMessages, aMobileNumbers))
+                messages.push(this.createSmsObject(mobileNumbers,messagesArg))
             }
         }else {
             throw new Error('Message should not be  null')
@@ -47,21 +47,21 @@ module.exports = {
         return messages
     },
 
-    extractedMessage(aMessage, aMobileNumbers) {
+    createSmsObject(mobileNumbers,messageArgs) {
         const message = {}
-        message.message = aMessage
+        message.message = messageArgs
         message.to = ['9444']
-        if (aMobileNumbers && aMobileNumbers.length > 0) {
-            if (aMobileNumbers instanceof Array) {
-                message.to = aMobileNumbers;
-            } else if ( aMobileNumbers instanceof String && aMobileNumbers.includes(',') ) {
-                const numberArray = aMobileNumbers.split(',')
+        if (mobileNumbers && mobileNumbers.length > 0) {
+            if (mobileNumbers instanceof Array) {
+                message.to = mobileNumbers;
+            } else if ( mobileNumbers instanceof String && mobileNumbers.includes(',') ) {
+                const numberArray = mobileNumbers.split(',')
                 numberArray.forEach((aNumber) => {
                  aNumber.trim()
                 })
-                message.to = aMobileNumbers;
+                message.to = mobileNumbers;
             } else {
-                message.to = [aMobileNumbers];
+                message.to = [mobileNumbers];
             }
         } else {
             throw new Error('Mobile numbers should not be  null')
